@@ -1,6 +1,7 @@
 # Create your views here.
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from django.contrib.auth.models import Group
 
 import simplejson
 
@@ -10,7 +11,7 @@ def trust_external(request):
     result = {
         'username': u.username,
         'userfullname': "%s %s" % (u.first_name, u.last_name),
-        'useremail': user.email,
+        'useremail': u.email,
         'grps': [ g.name for g in u.groups.all() ]
     }
     response = HttpResponse(simplejson.dumps(result))
