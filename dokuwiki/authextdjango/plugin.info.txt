@@ -1,0 +1,7 @@
+base   authextdjango
+author Robert Weidlich
+email  dev@robertweidlich.de
+date   2013-05-29
+name   authextdjango plugin
+desc   Authenticate against django installation
+url    https://github.com/cato-/django-external-auth
