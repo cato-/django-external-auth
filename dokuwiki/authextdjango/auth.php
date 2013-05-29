@@ -18,30 +18,12 @@ class auth_plugin_authextdjango extends DokuWiki_Auth_Plugin {
     public function __construct() {
         parent::__construct(); // for compatibility
 
-        // FIXME set capabilities accordingly
-        //$this->cando['addUser']     => false; // can Users be created?
-        //$this->cando['delUser']     => false; // can Users be deleted?
-        //$this->cando['modLogin']    => false; // can login names be changed?
-        //$this->cando['modPass']     => false; // can passwords be changed?
-        //$this->cando['modName']     => false; // can real names be changed?
-        //$this->cando['modMail']     => false; // can emails be changed?
-        //$this->cando['modGroups']   => false; // can groups be changed?
-        //$this->cando['getUsers']    => false; // can a (filtered) list of users be retrieved?
-        //$this->cando['getUserCount']=> false; // can the number of users be retrieved?
-        $this->cando['getGroups']   => true; // can a list of available groups be retrieved?
-        $this->cando['external']    => true; // does the module do external auth checking?
-        $this->cando['logout']      => false; // can the user logout again? (eg. not possible with HTTP auth)
+        $this->cando['getGroups']   = true; // can a list of available groups be retrieved?
+        $this->cando['external']    = true; // does the module do external auth checking?
+        $this->cando['logout']      = false; // can the user logout again? (eg. not possible with HTTP auth)
 
-        // FIXME intialize your auth system and set success to true, if successful
         $this->success = true;
     }
-
-
-    /**
-     * Log off the current user [ OPTIONAL ]
-     */
-    //public function logOff() {
-    //}
 
     /**
      * Do all authentication [ OPTIONAL ]
@@ -56,8 +38,6 @@ class auth_plugin_authextdjango extends DokuWiki_Auth_Plugin {
         global $USERINFO;
         global $conf;
         $sticky ? $sticky = true : $sticky = false; //sanity check
-
-        // do the checking here
 
 	if( isset($_COOKIE['sessionid'])) {
      
@@ -124,9 +104,9 @@ class auth_plugin_authextdjango extends DokuWiki_Auth_Plugin {
         curl_setopt($request, CURLOPT_SSL_VERIFYPEER, 0);
         $response = curl_exec($request);
         if (curl_errno($request) != 0) {
-        msg("Some error occured during connecting to django. Login not possible");
-        curl_close($request);
-        return false;
+            msg("Some error occured during connecting to django. Login not possible");
+            curl_close($request);
+            return false;
         }
         curl_close($request);
         
